@@ -12,7 +12,7 @@ testFilePath = args[2]
 
 y_pred = []
 with open(params.predDir + '/' + predFileName, 'r') as predFile:
-    for line in predFile:
+    for line in sorted(predFile):
         p = line.rstrip()
         p = 'S' if p == '1' else p
         # print('pred:', p)

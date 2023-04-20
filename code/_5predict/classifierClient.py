@@ -356,11 +356,11 @@ class ClassifierClient:
         prediction_in_capital = self.params.capitalize_for_writing_prediction_to_file[prediction]
         self.predFile.write(prediction_in_capital + '\n')   # add at the end of the file
         self.predFile.flush()
-        prediction_before_overwrite_in_capital = self.params.capitalize_for_writing_prediction_to_file[prediction_before_overwrite]
-        self.predFileBeforeOverwrite.write(prediction_before_overwrite_in_capital + '\n')
-        self.predFileBeforeOverwrite.flush()
-        self.predFileWithTimeStamps.write(prediction_in_capital + ',' + timeStampSegment[0] + '\n')   # add at the end of the file
-        self.predFileWithTimeStamps.flush()
+        # prediction_before_overwrite_in_capital = self.params.capitalize_for_writing_prediction_to_file[prediction_before_overwrite]
+        # self.predFileBeforeOverwrite.write(prediction_before_overwrite_in_capital + '\n')
+        # self.predFileBeforeOverwrite.flush()
+        # self.predFileWithTimeStamps.write(prediction_in_capital + ',' + timeStampSegment[0] + '\n')   # add at the end of the file
+        # self.predFileWithTimeStamps.flush()
 
     def replaceToWake(self, prediction, signal):
         self.currentCh2Intensity = self.getCh2Intensity(signal)
