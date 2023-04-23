@@ -3,8 +3,8 @@
 
 import sys
 sys.path.insert(1,'..')
-from os import listdir
-from os.path import splitext, isfile
+from os import listdir,makedirs
+from os.path import splitext, isfile, exists
 from _7utils.parameterSetup import ParameterSetup
 from classifierClient import ClassifierClient
 from _5predict.eegFileReaderServer import EEGFileReaderServer
@@ -36,7 +36,8 @@ class RemOfflineApplication:
         # postFiles = sorted(listdir(self.postDir))
         # fileCnt = 0
         for inputFileFolder in postPath:
-        
+            if not exists(self.predDir+"/"+inputFileFolder):
+                makedirs(self.predDir+"/"+inputFileFolder)
             for inputFileName in listdir(self.postDir+"/"+inputFileFolder):
                 if not inputFileName.startswith('.'):
                     print('inputFileName = ' + inputFileName)
@@ -62,7 +63,7 @@ class RemOfflineApplication:
                                         samplingFreq=model_samplingFreq, epochTime=model_epochTime)
                             else:
                                 self.client = ClassifierClient(self.recordWaves, self.extractorType, self.classifierType, classifierID,
-                                    inputFileID=inputFileID,samplingFreq=model_samplingFreq, epochTime=model_epochTime)# same id
+                                    inputFileID=inputFileID,samplingFreq=model_samplingFreq, epochTime=model_epochTime,predPath=predFileFullPath)# same id/pred folder path
                             self.client.predictionStateOn()
                             self.client.hasGUI = False
                             # sys.stdout.write('classifierClient started by ' + str(channelOpt) + ' channel.')

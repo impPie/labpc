@@ -16,9 +16,11 @@ from statistics import standardize, standardizer
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 class ClassifierClient:
-    def __init__(self, recordWaves, extractorType, classifierType, classifierID, inputFileID='', offsetWindowID=0, chamberID=-1, samplingFreq=0, epochTime=0):
+    def __init__(self, recordWaves, extractorType, classifierType, classifierID, inputFileID='', offsetWindowID=0, chamberID=-1, samplingFreq=0, epochTime=0,predPath=""):
         self.recordWaves = recordWaves
         self.inputFileID = inputFileID
+        # self.inputFilefolder = inputFileFolder
+        self.predPath = predPath
         self.chamberID = chamberID
         chamberLabel = '_chamber' + str(self.chamberID+1)  # adds 1 because in Sleep Sign Recorder, chambers start from 1.
 
@@ -138,16 +140,18 @@ class ClassifierClient:
         '''
 
         # makes a file in params.predDir
-        if self.inputFileID == '':
-            self.predFileID = timeFormatting.presentTimeEscaped()
-        else:
-            self.predFileID = self.inputFileID
+        # if self.inputFileID == '':
+        #     self.predFileID = timeFormatting.presentTimeEscaped()
+        # else:
+        #     self.predFileID = self.inputFileID
 
-        if self.chamberID != -1:
-            self.predFileID += chamberLabel
+        # if self.chamberID != -1:
+        #     self.predFileID += chamberLabel
 
-        print('writes prediction results to ' + self.params.predDir + '/' + self.predFileID + '_pred.txt')
-        self.predFile = open(self.params.predDir + '/' + self.predFileID + '_pred.txt', 'w')
+        # print('writes prediction results to ' + self.params.predDir + '/' + self.predFileID + '_pred.txt')
+        # self.predFile = open(self.params.predDir + '/' + self.predFileID + '_pred.txt', 'w')
+        self.predFile = open(predPath, 'w')
+        # predFileFullPath = self.predDir + '/' +inputFileFolder+ '/'+ inputFileID + '_pred.txt'
 
         # self.predFileBeforeOverwrite = open(self.params.predDir + '/' + self.predFileID + '_pred_before_overwrite.txt', 'w')
         # self.predFileWithTimeStamps = open(self.params.predDir + '/' + self.predFileID + '_pred_with_timestamps.txt', 'w')
