@@ -7,20 +7,24 @@ from _6test.evaluationCriteria import y2sensitivity, y2confusionMat, printConfus
 
 args = sys.argv
 params = ParameterSetup()
-predFileName = args[1]
+prePath = args[1]
 testFilePath = args[2]
 
 y_pred = []
-with open(params.predDir + '/' + predFileName, 'r') as predFile:
-    for line in sorted(predFile):
-        p = line.rstrip()
-        p = 'S' if p == '1' else p
-        # print('pred:', p)
-        y_pred.append(p)
+
+pFiles = sorted(os.listdir(prePath))
+for fp in pFiles:
+    with open(prePath + '/' + fp, 'r') as predFile:
+        for line in (predFile):
+            p = line.rstrip()
+            p = 'S' if p == '1' else p
+            # print('pred:', p)
+            y_pred.append(p)
 
 y_test = []
 Files = os.listdir(testFilePath)
 for f in Files:
+    print(f)
     with open(testFilePath+'/'+f) as testFile:
         for i in range(params.metaDataLineNumUpperBound4stage):    # skip lines that describes metadata
             line = testFile.readline()
