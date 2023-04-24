@@ -11,7 +11,8 @@ params = ParameterSetup()
 prePath = params.predDir
 
 # prePath = args[1]
-testFilePath = args[2]
+testFilePath = args[1]
+# testFilePath = args[2]
 
 
 # prefds = (os.listdir(prePath))
@@ -29,8 +30,8 @@ for fd in os.listdir(prePath):
     Files = os.listdir(testFilePath+"/"+fd)
     # Files = os.listdir(testFilePath)
     for f in Files:
-        print(f)
-        with open(testFilePath+'/'+f) as testFile:
+        # print(f)
+        with open(testFilePath+'/'+fd+ '/'+f) as testFile:
             for i in range(params.metaDataLineNumUpperBound4stage):    # skip lines that describes metadata
                 line = testFile.readline()
                 if line.startswith(params.cueWhereStageDataStarts):
@@ -60,5 +61,7 @@ for fd in os.listdir(prePath):
     print('specificity =', specificity)
     print('accuracy =', accuracy)
     print('precision =', precision)
-    print('###############################################################################################################################################################################################')
+    print('####################################################################################################')
+    print('##########################################^'+fd+'^##################################################')
+    print('####################################################################################################')
 
