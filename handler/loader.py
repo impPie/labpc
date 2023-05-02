@@ -154,12 +154,12 @@ class Loaddata:
         fourS = np.array(len(label)*[4])
         my_annot = mne.Annotations(onset, duration=fourS, description=label)
         # print(my_annot)
-        print(data.shape)
+        # print(data.shape)
         data = self.up_or_down_sampling(data, model_samplePointNum=128, observed_samplePointNum = freq)
 
         inf = mne.create_info(["eeg"], 128, 'eeg')
         data = np.array(data).reshape(1, -1)
-        print(data.shape)
+        # print(data.shape)
 
 
         # normalize
@@ -193,7 +193,7 @@ class Loaddata:
         raw.set_annotations(my_annot)
         return raw
 
-    def twolabel_raw(self, folder_path, prf,ai_path,norm=False):
+    def twolabel_raw(self, folder_path, prf,ai_path,freq,norm=True):
         
         data, t = self.readEEG(folder_path+"/"+prf+".csv")
         label1 = self.readStageSeq(folder_path+"/"+prf+"_Trend.csv")
@@ -210,6 +210,8 @@ class Loaddata:
         onset = np.arange(0, 4*len(label),4)      
         fourS = np.array(len(label)*[4])
         my_annot = mne.Annotations(onset, duration=fourS, description=label)
+        data = self.up_or_down_sampling(data, model_samplePointNum=128, observed_samplePointNum = freq)
+
         inf = mne.create_info(["eeg"], 128,'eeg')      
         data = np.array(data).reshape(1, -1)
         #normalize
