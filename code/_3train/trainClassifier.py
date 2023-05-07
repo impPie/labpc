@@ -24,7 +24,7 @@ paramDir = p['pathPrefix'] + '/' + p['paramsDir']
 outputDir = ''
 
 for paramFileName in listdir(paramDir):
-    if paramFileName.startswith('t_params.') and not paramFileName.endswith('~'):
+    if paramFileName.startswith('params.') and not paramFileName.endswith('~'):
         print('paramFileName =', paramFileName)
         params = ParameterSetup(paramDir, paramFileName, outputDir)
         trainClassifier(params, outputDir, optionType, optionVals)
