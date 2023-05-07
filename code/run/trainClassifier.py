@@ -11,7 +11,7 @@ print("+++++++================================================++++++++++++++++++
 import json
 from os import listdir
 from utils.parameterSetup import ParameterSetup
-from classifierTrainer import trainClassifier
+from _3train.classifierTrainer import trainClassifier
 
 args = sys.argv
 optionType = args[1] if len(args) > 2 else ''

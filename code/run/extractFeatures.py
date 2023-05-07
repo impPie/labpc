@@ -9,7 +9,8 @@ print(sys.path)
 from os import listdir
 from utils.parameterSetup import ParameterSetup
 from utils.fileManagement import getFileIDs
-from _2featureEx.algorithmFactory import AlgorithmFactory
+# from _2featureEx.algorithmFactory import AlgorithmFactory
+from _2featureEx.featureExtractorRawDataWithSTFT import FeatureExtractorRawDataWithSTFT 
 from _1LAndP.outlierMouseFilter import OutlierMouseFilter
 
 #---------------
@@ -28,8 +29,9 @@ featureDir = params.featureDir
 pastStageLookUpNum = params.pastStageLookUpNum
 
 extractorType = params.extractorType
-factory = AlgorithmFactory(extractorType)
-extractor = factory.generateExtractor()
+# factory = AlgorithmFactory(extractorType)
+# extractor = factory.generateExtractor()
+extractor = FeatureExtractorRawDataWithSTFT()
 
 oFilter = OutlierMouseFilter()
 

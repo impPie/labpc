@@ -39,19 +39,6 @@ def extract(featureFilePath, stageFilePath):
 # connect samples and train a model
 # def connectSamplesAndTrain(params, paramID, classifier, featureAndStageFileFullPathsL):
 def connectSamplesAndTrain(params, fileTripletL, stage_restriction, paramID=0):
-    # label4EMG = params.label4withEMG if params.useEMG else params.label4withoutEMG
-    # count mouseNum and get resampleNumPerMouse
-    # mouseNum = -1 # subtract one because there's one excluded file
-    # files =  listdir(params.featureDir)
-    # fileCnt = 0
-    # for trainFileFullName in files:
-    #    if trainFileFullName.startswith(params.featureFilePrefix + '.' + params.extractorType + '.' + label4EMG):
-    #        mouseNum += 1
-    # if maxSampleNum > 0:
-    #    resampleNumPerMouse = getResampleNumPerMouse(mouseNum, params.maxSampleNum)
-    #else:
-    #    resampleNumPerMouse = 0
-    # print('maxSampleNum = ', params.maxSampleNum, ' mouseNum = ', mouseNum, ', resampleNumPerMouse = ', resampleNumPerMouse)
     print('in classifierTrainer.connectSamplesAndTrain(), params.networkType =', params.networkType)
     if params.networkType == 'cnn_lstm':
         print('using cnn_lstm in connectSamplesAndTrain')
@@ -110,6 +97,7 @@ def connectSamplesAndTrain(params, fileTripletL, stage_restriction, paramID=0):
     # print('before calling findClassifier. params.networkType =', params.networkType)
     classifierID = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
     params.writeAllParams(params.classifierDir, classifierID)
+    
     writeTrainFileIDsUsedForTraining(params, classifierID, fileTripletL)
     classifier = findClassifier(params, paramID, classLabels, classifierID)
     classifier.train(x_train, y_train)
@@ -122,11 +110,11 @@ def connectSamplesAndTrain(params, fileTripletL, stage_restriction, paramID=0):
 #-----------------------
 def trainClassifier(params, outputDir, optionType, optionVals):
     if optionType == '-o':
-        testNum, offset = optionVals
+        testNum, offset = optionVals# set test and train number 
         randomize = False
         train_fileTripletL, test_fileTripletL = getEEGAndFeatureFiles(params, testNum, offset, randomize)
     if optionType == '-r':
-        testNum = optionVals[0]
+        testNum = optionVals[0]  # set test number, choose randomly
         offset, randomize = 0, True
         train_fileTripletL, test_fileTripletL = getEEGAndFeatureFiles(params, testNum, offset, randomize)
     elif optionType == '-p':
