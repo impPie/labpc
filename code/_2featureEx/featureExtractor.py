@@ -32,8 +32,8 @@ class FeatureExtractor():
         # compute parameters
         time_step = 1 / samplingFreq
         wsizeInTimePoints = samplingFreq * windowSizeInSec   # window size. data is sampled at 128 Hz, so 1280 sample points = 10 sec.
-        binNum4spectrum = round(targetBand.getBandWidth() / binWidth4freqHisto)
-        binArray4spectrum = np.linspace(targetBand.bottom, targetBand.top, binNum4spectrum + 1)
+        # binNum4spectrum = round(targetBand.getBandWidth() / binWidth4freqHisto)
+        # binArray4spectrum = np.linspace(targetBand.bottom, targetBand.top, binNum4spectrum + 1)
 
         #--------
         # load data
