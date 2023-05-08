@@ -5,6 +5,7 @@ print(sys.path)
 # sys.path.insert(1, sys.path[0]+"/../")
 
 # sys.path.insert(1,'..')
+import time
 
 from os import listdir
 from utils.parameterSetup import ParameterSetup
@@ -20,6 +21,7 @@ if len(args) > 1:
     option = args[1]
 else:
     option = ''
+start_time = time.time()
 
 # get params shared by programs
 params = ParameterSetup()
@@ -70,3 +72,4 @@ for fileID in fileIDs:
                     break
         if flag4extraction:
             extractor.featureExtraction(params, fileID)
+print("--- %s minutes ---" % (time.time() - start_time)/60)
