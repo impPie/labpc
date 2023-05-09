@@ -4,7 +4,7 @@ from utils.parameterSetup import ParameterSetup
 from evaluationCriteria import y2sensitivity, y2confusionMat, printConfusionMat, mathewsCorrelationCoefficient, multiClassMCC
 from sequentialPrediction import classifySequentially
 from writePredictionResults import writePredictionResults
-from fileManagement import readTrainFileIDsUsedForTraining, getFilesNotUsedInTrain
+from utils.fileManagement import readTrainFileIDsUsedForTraining, getFilesNotUsedInTrain
 
 def printMetadata(params):
     print('extractor type = ' + str(params.extractorType))

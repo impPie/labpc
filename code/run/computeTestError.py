@@ -2,7 +2,7 @@ import sys
 sys.path.insert(1, sys.path[0]+"/../")
 import pickle
 from utils.parameterSetup import ParameterSetup
-from tester import printMetadata, test_by_classifierID
+from _5test.tester import printMetadata, test_by_classifierID
 
 args = sys.argv
 
@@ -34,5 +34,3 @@ else:
 pickle.dump((classifierIDs, measures_by_classifier_L), f)
 f.close()
 
-
-#####
