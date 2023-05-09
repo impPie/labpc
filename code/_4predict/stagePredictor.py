@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 # import sys
 # sys.path.insert(1,'..')
-from emgProcessing import emg2feature
+from _4predict.emgProcessing import emg2feature
 from utils.stageLabelAndOneHot import constructPastStagesOneHots, oneHot2stageLabel
 # from processFeatures import trimFeatures
 

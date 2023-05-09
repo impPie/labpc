@@ -1,19 +1,22 @@
 #!/Users/ssg/.pyenv/shims/python
 # -*- coding: utf-8 -*-
-
+import sys
+sys.path.insert(1, '..')
+import pickle,numpy
 from _3train.deepClassifier import DeepClassifier
 from os import listdir, makedirs
 from utils.fileManagement import selectClassifierID
-from eegFileReaderServer import EEGFileReaderServer
-from classifierClient import ClassifierClient
+# from eegFileReaderServer import EEGFileReaderServer
+# from classifierClient import ClassifierClient
 from utils.parameterSetup import ParameterSetup
 from os.path import splitext, isfile, exists
-from stagePredictor import StagePredictor
-import sys
-sys.path.insert(1, '..')
+from _4predict.stagePredictor import StagePredictor
+from _2featureEx.featureExtractorRawDataWithSTFT import FeatureExtractorRawDataWithSTFT 
+from _5test.evaluationCriteria import y2sensitivity, y2confusionMat, printConfusionMat
+import time
 
 
-class RemOfflineApplication:
+class EzT:
 
     def __init__(self, args):
         self.args = args
@@ -21,57 +24,94 @@ class RemOfflineApplication:
         pass
 
     def start(self):
-        channelOpt = 1
+        # channelOpt = 1
         params = ParameterSetup()
         self.recordWaves = params.writeWholeWaves
         self.extractorType = params.extractorType
         self.classifierType = params.classifierType
         self.postDir = params.postDir
         # self.predDir = params.predDir
-        self.finalClassifierDir = params.finalClassifierDir
-        observed_samplingFreq = params.samplingFreq
-        observed_epochTime = params.windowSizeInSec
+        self.classLabels = params.sampleClassLabels[:params.maximumStageNum]
+        self.predictionState=1
+        # observed_samplingFreq = params.samplingFreq
+        # observed_epochTime = params.windowSizeInSec
 
+        finalClassifierDir = params.finalClassifierDir
         
-        try:
-               
-                classifierID = ''
-                classifier = DeepClassifier(self.classLabels, classifierID=classifierID, paramsForDirectorySetup=self.params, paramsForNetworkStructure=paramsForNetworkStructure)
-                model_path = finalClassifierDir + '/weights.' + str(classifierID) + '.pkl'
+        classifierTypeFileName = 'classifierTypes.csv'
+        with open(finalClassifierDir + '/' + classifierTypeFileName) as f:
+                    for line in f:
+                        classifierID, classifierType, samplingFreq, epochTime = [elem.strip() for elem in line.split(',')]
+                        print(classifierID, ',', classifierType, ',', samplingFreq, ',', epochTime)
+                        # classifierMetadataList.append((classifierID, classifierType, int(samplingFreq), int(epochTime)))
 
-                print('model_path = ', model_path)
-                classifier.load_weights(model_path)
+        paramFileName = 'params.' + str(classifierID) + '.json'
 
-                self.stagePredictor = StagePredictor(paramsForNetworkStructure, self.extractor, classifier, finalClassifierDir, classifierID, self.params.markovOrderForPrediction)
-                
-                timeStampSegment=[]
-                # eegSegment = self.one_record[:, 0]
-                for eegSegment in pkddata:
-                    if self.predictionState:
-                        # stageEstimate is one of ['w', 'n', 'r']
+        paramsForNetworkStructure = ParameterSetup(paramDir=finalClassifierDir, paramFileName=paramFileName)
 
-                        stagePrediction = self.stagePredictor.predict(
-                            eegSegment, timeStampSegment, self.params.stageLabels4evaluation, self.params.stageLabel2stageID)
+        self.extractor = FeatureExtractorRawDataWithSTFT()
+        
+        self.y_pred_L=[]
+        
+        try: 
+            classifier = DeepClassifier(self.classLabels, classifierID=classifierID, paramsForDirectorySetup=params, paramsForNetworkStructure=paramsForNetworkStructure)
+            model_path = finalClassifierDir + '/weights.' + str(classifierID) + '.pkl'
 
-                    else:
-                        stagePrediction = '?'
+            print('model_path = ', model_path)
+            classifier.load_weights(model_path)
 
-                    # update prediction results in graphs by moving all graphs one window
+            self.stagePredictor = StagePredictor(paramsForNetworkStructure, self.extractor, classifier, finalClassifierDir, classifierID, params.markovOrderForPrediction)
+            
+            timeStampSegment=[]
+            #------------------------------------------------
+            #------------------------------------------------
+            with open("../../data/pickled ori/eegAndStage.sixFilesNo1.pkl","rb") as dataFileHandler:
+                (eeg, emg, stageSeq, timeStamps) = pickle.load(dataFileHandler)
+            
+            beeg=eeg.reshape(-1,512)
+            # eegSegment = self.one_record[:, 0]
+            for eegSegment in beeg:
+                if self.predictionState:
 
-                    if self.predictionState:
-                        # ----
-                        # if the prediction is P, then use the previous one
-                        if stagePrediction == 'P':
-                            # print('stagePrediction == P for wID = ' + str(wID))
-                            if len(self.y_pred_L) > 0:
-                                finalClassifierDirPrediction = self.y_pred_L[len(
-                                    self.y_pred_L)-1]
-                                # print('stagePrediction replaced to ' + stagePrediction + ' at ' + str(segmentID))
-                            else:
-                                stagePrediction = 'M'
+                    stagePrediction = self.stagePredictor.predict(
+                        eegSegment, timeStampSegment, params.stageLabels4evaluation, params.stageLabel2stageID)
 
-                        self.y_pred_L.append(stagePrediction)
+                else:
+                    stagePrediction = '?'
 
+
+                if self.predictionState:
+                    # ----
+                    # if the prediction is P, then use the previous one
+                    if stagePrediction == 'P':
+                        # print('stagePrediction == P for wID = ' + str(wID))
+                        if len(self.y_pred_L) > 0:
+                            finalClassifierDirPrediction = self.y_pred_L[len(
+                                self.y_pred_L)-1]
+                            # print('stagePrediction replaced to ' + stagePrediction + ' at ' + str(segmentID))
+                        else:
+                            stagePrediction = 'M'
+
+                    self.y_pred_L.append(stagePrediction)
+            
+            y_train = stageSeq
+            y_pred = self.y_pred_L
+
+            (stageLabels, sensitivity, specificity, accuracy) = y2sensitivity(y_train, y_pred)
+            (stageLabels4confusionMat, confusionMat) = y2confusionMat(y_train, y_pred)
+            printConfusionMat(stageLabels4confusionMat, confusionMat)
+
+            y_matching = (y_train == y_pred)
+            correctNum = sum(y_matching)
+            # print('y_train = ' + str(y_train[:50]))
+            # print('y_pred = ' + str(y_pred[:50]))
+            # print('correctNum = ' + str(correctNum))
+            y_length = y_pred.shape[0]
+            precision = correctNum / y_length
+            for labelID in range(len(stageLabels)):
+                print('  stageLabel = ' + stageLabels[labelID] + ', sensitivity = ' + "{0:.3f}".format(sensitivity[labelID]) + ', specificity = ' + "{0:.3f}".format(specificity[labelID]) + ', accuracy = ' + "{0:.3f}".format(accuracy[labelID]))
+            print('  precision = ' + "{0:.5f}".format(precision) + ' (= ' + str(correctNum) + '/' + str(y_length) +')')
+            print('')
 
         except Exception as e:
             print(str(e))
@@ -80,9 +120,14 @@ class RemOfflineApplication:
 
 
 if __name__ == '__main__':
+    
+    start_time = time.time()
+
     args = sys.argv
-    mainapp = RemOfflineApplication(args)
+    mainapp = EzT(args)
     mainapp.start()
+    # print(datetime.datetime.now())
+    print("--- %s minutes ---" % (int(time.time() - start_time)/60))
     # while True:
     # print('*')
     # time.sleep(5)
