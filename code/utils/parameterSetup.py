@@ -273,7 +273,7 @@ class ParameterSetup(object):
         # self.classifierID = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
 
         # orig_stageLabels = ['RW', 'W', 'R', 'H', 's', 'M', 'P', 'F2', '?', '-']
-        orig_stageLabels = ['S', 'W', 'R', 'H', 'RW', 'M', 'P', 'F2', '?', '-']
+        orig_stageLabels = ['S', 'L', 'R', 'H', 'RW', 'M', 'P', 'F2', '?', '-']
         self.stagesByDepth = ['r', 'n', 'w', 'h', '?']
         self.stageLabel2stageID = {stage : stageID for stage, stageID in zip(orig_stageLabels[:self.maximumStageNum], range(self.maximumStageNum))}
         

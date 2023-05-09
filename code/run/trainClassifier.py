@@ -20,7 +20,7 @@ optionType = args[1] if len(args) > 2 else ''
 optionVals = args[2:] if len(args) > 2 else [0]
 print('optionType =', optionType, ', optionVals = ', optionVals)
 # read params.json
-pathFilePath = open('./path.json')
+pathFilePath = open('../path.json')
 p = json.load(pathFilePath)
 paramDir = p['pathPrefix'] + '/' + p['paramsDir']
 outputDir = ''
@@ -32,4 +32,4 @@ for paramFileName in listdir(paramDir):
         trainClassifier(params, outputDir, optionType, optionVals)
         
 print(datetime.datetime.now())
-print("--- %s minutes ---" % (time.time() - start_time)/60)
+print("--- %s minutes ---" % (int(time.time() - start_time)/60))

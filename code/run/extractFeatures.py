@@ -72,4 +72,4 @@ for fileID in fileIDs:
                     break
         if flag4extraction:
             extractor.featureExtraction(params, fileID)
-print("--- %s minutes ---" % (time.time() - start_time)/60)
+print("--- %s minutes ---" % (int(time.time() - start_time)/60))
