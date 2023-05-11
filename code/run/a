@@ -1,0 +1,11 @@
+Finish predicting--- 5.916666666666667 minutes ---
+in ParameterSetup, paramFilePath = ../../data/params/params.json
+  S->S: 14036     S->L: 989       S->R: 161       S->H: 4
+  L->S: 690       L->L: 13507     L->R: 107       L->H: 431
+  R->S: 57        R->L: 256       R->R: 1598      R->H: 23
+  H->S: 2         H->L: 787       H->R: 65        H->H: 556
+sensitivity = [0.92402897 0.91666101 0.8262668  0.39432624]
+specificity = [0.95857072 0.89036366 0.98937291 0.98562416]
+accuracy = [0.9427996  0.90201088 0.97989119 0.96056389]
+precision = [0.94934055 0.86923225 0.82755049 0.54832347]
+--- 5.933333333333334 minutes ---

@@ -98,8 +98,10 @@ class EzT:
             #Record
             with open("{}predict.pickle".format(classifierID), 'wb') as out_path:
                  pickle.dump(self.y_pred_L,out_path)
-
-            y_pred = np.array(self.y_pred_L[11:])
+            out_path.close()
+            
+            y_pred = [x.upper() if x!= "n" else "S" for x in self.y_pred_L]
+            y_pred = np.array(y_pred[11:])
             y_test = np.array(stageSeq[11:])
 
             (stageLabels, sensitivity, specificity, accuracy, precision, f1score) = y2sensitivity(y_test, y_pred)
