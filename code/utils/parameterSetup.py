@@ -247,7 +247,7 @@ class ParameterSetup(object):
 
         # label correction (dictionary)
         # self.classLabels = ['S', 'W', 'R']
-        self.labelCorrectionDict = {'S' : 'n', 'W' : 'w', 'R' : 'r', 'H' :'h', 'RW' : 'w', 'M' : 'm', 'P' : 'P', 'F2' : 'F2', '?' : '?', '-' : '-'}
+        self.labelCorrectionDict = {'S' : 'n', 'L' : 'l', 'R' : 'r', 'H' :'h', 'RW' : 'w', 'M' : 'm', 'P' : 'P', 'F2' : 'F2', '?' : '?', '-' : '-'}
         # self.labelCorrectionDict = {'S' : 'n', 'W' : 'w', 'R' : 'r', 'H' :'h', 'RW' : 'w', 'M' : 'm', 'P' : 'P', 'F2' : 'F2', '?' : '?', '-' : '-'}
 
         ### self.stageLabel2stageID = {'W': 0, 'S': 1, 'R': 2, 'M': 3, 'P': 4, 'RW': 5, 'F2' : 6}

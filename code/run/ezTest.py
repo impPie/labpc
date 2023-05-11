@@ -93,10 +93,12 @@ class EzT:
                             stagePrediction = 'M'
 
                     self.y_pred_L.append(stagePrediction)
+            print("Finish predicting--- %s minutes ---" % (int(time.time() - start_time)/60))
+
             #Record
             with open("{}predict.pickle".format(classifierID), 'wb') as out_path:
                  pickle.dump(self.y_pred_L,out_path)
-                 
+
             y_pred = np.array(self.y_pred_L[11:])
             y_test = np.array(stageSeq[11:])
 
