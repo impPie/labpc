@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.path.insert(1, '..')
-import pickle,numpy
+import pickle,numpy as np
 from _3train.deepClassifier import DeepClassifier
 from os import listdir, makedirs
 from utils.fileManagement import selectClassifierID
@@ -93,25 +93,20 @@ class EzT:
                             stagePrediction = 'M'
 
                     self.y_pred_L.append(stagePrediction)
-            
-            y_train = stageSeq
-            y_pred = self.y_pred_L
+            #Record
+            with open("{}predict.pickle".format(classifierID), 'wb') as out_path:
+                 pickle.dump(self.y_pred_L,out_path)
+                 
+            y_pred = np.array(self.y_pred_L[11:])
+            y_test = np.array(stageSeq[11:])
 
-            (stageLabels, sensitivity, specificity, accuracy) = y2sensitivity(y_train, y_pred)
-            (stageLabels4confusionMat, confusionMat) = y2confusionMat(y_train, y_pred)
+            (stageLabels, sensitivity, specificity, accuracy, precision, f1score) = y2sensitivity(y_test, y_pred)
+            (stageLabels4confusionMat, confusionMat) = y2confusionMat(y_test, y_pred, params.stageLabels4evaluation)
             printConfusionMat(stageLabels4confusionMat, confusionMat)
-
-            y_matching = (y_train == y_pred)
-            correctNum = sum(y_matching)
-            # print('y_train = ' + str(y_train[:50]))
-            # print('y_pred = ' + str(y_pred[:50]))
-            # print('correctNum = ' + str(correctNum))
-            y_length = y_pred.shape[0]
-            precision = correctNum / y_length
-            for labelID in range(len(stageLabels)):
-                print('  stageLabel = ' + stageLabels[labelID] + ', sensitivity = ' + "{0:.3f}".format(sensitivity[labelID]) + ', specificity = ' + "{0:.3f}".format(specificity[labelID]) + ', accuracy = ' + "{0:.3f}".format(accuracy[labelID]))
-            print('  precision = ' + "{0:.5f}".format(precision) + ' (= ' + str(correctNum) + '/' + str(y_length) +')')
-            print('')
+            print('sensitivity =', sensitivity)
+            print('specificity =', specificity)
+            print('accuracy =', accuracy)
+            print('precision =', precision)
 
         except Exception as e:
             print(str(e))
