@@ -9,3 +9,22 @@ specificity = [0.95857072 0.89036366 0.98937291 0.98562416]
 accuracy = [0.9427996  0.90201088 0.97989119 0.96056389]
 precision = [0.94934055 0.86923225 0.82755049 0.54832347]
 --- 5.933333333333334 minutes ---
+
+loading weights in deepClassifier.py from ../../data/finalclassifier/weights.85J254.pkl
+in deepClassifier.generateModel, params.networkType = cnn_lstm
+using CNN-LSTM for raw data
+filter_nums = [64, 64, 64, 64, 64, 64, 64, 64]
+kernel_sizes = [9, 9, 9, 9, 7, 7, 7, 7]
+strides = [1, 2, 2, 2, 2, 2, 2, 2]
+compiling the model
+Finish predicting--- 134.45 minutes ---
+in ParameterSetup, paramFilePath = ../../data/params/params.json
+  S->S: 441197    S->L: 27065     S->R: 8787      S->H: 87
+  L->S: 8656      L->L: 242200    L->R: 6368      L->H: 6568
+  R->S: 2444      R->L: 3632      R->R: 56881     R->H: 296
+  H->S: 67        H->L: 13786     H->R: 4955      H->H: 9010
+sensitivity = [0.92467766 0.91814763 0.8992617  0.32389101]
+specificity = [0.96853152 0.92171339 0.97384051 0.99135642]
+accuracy = [0.94338214 0.92058284 0.96817063 0.96903963]
+precision = [0.97531413 0.84483558 0.73880064 0.56450097]
+--- 134.46666666666667 minutes ---
