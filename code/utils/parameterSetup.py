@@ -207,14 +207,14 @@ class ParameterSetup(object):
         # self.additionalFeatureDim = d['additionalFeatureDim']
 
         # markov order
-        self.markovOrderForTraining = d['markovOrderForTraining']
-        self.markovOrderForPrediction = d['markovOrderForPrediction']
+        # self.markovOrderForTraining = d['markovOrderForTraining']
+        # self.markovOrderForPrediction = d['markovOrderForPrediction']
 
         # number of stages to consider
         self.maximumStageNum = d['maximumStageNum']
 
         # maximum number of samples to be params_used
-        self.maxSampleNum = d['maxSampleNum']
+        # self.maxSampleNum = d['maxSampleNum']
 
         if 'showCh2' in d:
             self.showCh2 = d['showCh2']
