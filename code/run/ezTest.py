@@ -65,7 +65,8 @@ class EzT:
             timeStampSegment=[]
             #------------------------------------------------
             #------------------------------------------------
-            with open("../../data/pickled ori/eegAndStage.sixFilesNo1.pkl","rb") as dataFileHandler:
+            with open("../../handler/data/pickled/eegAndStage.All_L.pkl","rb") as dataFileHandler:
+            # with open("../../data/pickled ori/eegAndStage.sixFilesNo1.pkl","rb") as dataFileHandler:
                 (eeg, emg, stageSeq, timeStamps) = pickle.load(dataFileHandler)
             
             beeg=eeg.reshape(-1,512)
