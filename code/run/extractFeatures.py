@@ -18,7 +18,11 @@ from _1LAndP.outlierMouseFilter import OutlierMouseFilter
 # set up parameters
 args = sys.argv
 if len(args) > 1:
-    option = args[1]
+    if args[1]!='-o':
+        option = " "+ args[1]
+    else:
+        option = args[1]
+
 else:
     option = ''
 start_time = time.time()
@@ -26,7 +30,8 @@ start_time = time.time()
 # get params shared by programs
 params = ParameterSetup()
 useEMG = params.useEMG
-eegDir = params.eegDir
+# eegDir = "data/pickled del"
+eegDir = params.eegDir+option
 featureDir = params.featureDir
 pastStageLookUpNum = params.pastStageLookUpNum
 
