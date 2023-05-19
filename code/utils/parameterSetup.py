@@ -165,12 +165,12 @@ class ParameterSetup(object):
         if 'torch_lstm_bidirectional' in d:
             self.torch_lstm_bidirectional = d['torch_lstm_bidirectional']
 
-        self.torch_resnet_layer_nums = d['torch_resnet_layer_nums']
-        self.torch_resnet_conv_channels = d['torch_resnet_conv_channels']
-        self.torch_resnet_output_channels_coeffs = d['torch_resnet_output_channels_coeffs']
-        self.torch_resnet_output_channels_coeffs = d['torch_resnet_output_channels_coeffs']
-        self.torch_resnet_resblock_stride_nums = d['torch_resnet_resblock_stride_nums']
-        self.torch_resnet_avg_pool_size = d['torch_resnet_avg_pool_size']
+        # self.torch_resnet_layer_nums = d['torch_resnet_layer_nums']
+        # self.torch_resnet_conv_channels = d['torch_resnet_conv_channels']
+        # self.torch_resnet_output_channels_coeffs = d['torch_resnet_output_channels_coeffs']
+        # self.torch_resnet_output_channels_coeffs = d['torch_resnet_output_channels_coeffs']
+        # self.torch_resnet_resblock_stride_nums = d['torch_resnet_resblock_stride_nums']
+        # self.torch_resnet_avg_pool_size = d['torch_resnet_avg_pool_size']
 
         if 'torch_filter_nums_for_stft' in d:
             self.torch_filter_nums_for_stft = d['torch_filter_nums_for_stft']

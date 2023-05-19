@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(1, sys.path[0]+"/../")
 
-print(sys.path)
+# print(sys.path)
 # sys.path.insert(1, sys.path[0]+"/../")
 
 # sys.path.insert(1,'..')
@@ -18,10 +18,11 @@ from _1LAndP.outlierMouseFilter import OutlierMouseFilter
 # set up parameters
 args = sys.argv
 if len(args) > 1:
-    if args[1]!='-o':
-        option = " "+ args[1]
-    else:
-        option = args[1]
+    # if args[1]!='-o':
+    #     option = " "+ args[1]
+    # else:
+    #     option = args[1]
+    option = args[1]
 
 else:
     option = ''
@@ -31,7 +32,8 @@ start_time = time.time()
 params = ParameterSetup()
 useEMG = params.useEMG
 # eegDir = "data/pickled del"
-eegDir = params.eegDir+option
+eegDir = params.eegDir
+print("eegDir: "+eegDir)
 featureDir = params.featureDir
 pastStageLookUpNum = params.pastStageLookUpNum
 
