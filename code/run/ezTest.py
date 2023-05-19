@@ -97,7 +97,7 @@ class EzT:
             print("Finish predicting--- %s minutes ---" % (int(time.time() - start_time)/60))
 
             #Record
-            with open("{}predict.pickle".format(classifierID), 'wb') as out_path:
+            with open("../../results/{}_predict.pickle".format(classifierID), 'wb') as out_path:
                  pickle.dump(self.y_pred_L,out_path)
             out_path.close()
             
