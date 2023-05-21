@@ -1,4 +1,6 @@
 torch 
+mne
+numpy
 pytorch-ignite 
 torchsummary 
 pyserial 

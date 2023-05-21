@@ -18,6 +18,7 @@ kernel_sizes = [9, 9, 9, 9, 7, 7, 7, 7]
 strides = [1, 2, 2, 2, 2, 2, 2, 2]
 compiling the model
 Finish predicting--- 134.45 minutes ---
+
 in ParameterSetup, paramFilePath = ../../data/params/params.json
   S->S: 441197    S->L: 27065     S->R: 8787      S->H: 87
   L->S: 8656      L->L: 242200    L->R: 6368      L->H: 6568
@@ -28,3 +29,27 @@ specificity = [0.96853152 0.92171339 0.97384051 0.99135642]
 accuracy = [0.94338214 0.92058284 0.96817063 0.96903963]
 precision = [0.97531413 0.84483558 0.73880064 0.56450097]
 --- 134.46666666666667 minutes ---
+
+in ParameterSetup, paramFilePath = ../../data/params/params.json
+W6193T , UTSN-L , 128 , 4
+in ParameterSetup, paramFilePath = ../../data/finalclassifier/params.W6193T.json
+in ParameterSetup, paramFilePath = ../../data/params/params.json
+model_path =  ../../data/finalclassifier/weights.W6193T.pkl
+loading weights in deepClassifier.py from ../../data/finalclassifier/weights.W6193T.pkl
+in deepClassifier.generateModel, params.networkType = cnn_lstm
+using CNN-LSTM for raw data
+filter_nums = [64, 64, 64, 64, 64, 64, 64, 64]
+kernel_sizes = [9, 9, 9, 9, 7, 7, 7, 7]
+strides = [1, 2, 2, 2, 2, 2, 2, 2]
+compiling the model
+Finish predicting--- 5.283333333333333 minutes ---
+in ParameterSetup, paramFilePath = ../../data/params/params.json
+  S->S: 13733     S->L: 1083      S->R: 263       S->H: 2
+  L->S: 559       L->L: 12619     L->R: 74        L->H: 175
+  R->S: 38        R->L: 197       R->R: 1656      R->H: 28
+  H->S: 3         H->L: 716       H->R: 60        H->H: 631
+sensitivity = [0.91061601 0.93982275 0.86294945 0.44751773]
+specificity = [0.96419193 0.89158066 0.9867304  0.99326256]
+accuracy = [0.93881333 0.91192637 0.9792694  0.96909257]
+precision = [0.95813856 0.86342798 0.80662445 0.75478469]
+--- 5.283333333333333 minutes ---
