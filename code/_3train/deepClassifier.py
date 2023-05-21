@@ -1,5 +1,6 @@
 from __future__ import print_function
 # import sys
+import time
 # sys.path.insert(1,'..')
 from os import mkdir
 from os.path import isdir
@@ -467,6 +468,8 @@ class DeepClassifier():
 
         @trainer.on(Events.EPOCH_COMPLETED)
         def log_training_results(trainer):
+            start_time = time.time()
+            
             model.eval()
             # print('# running log_training_results(trainer):')
             evaluator.run(train_loader)
@@ -481,9 +484,12 @@ class DeepClassifier():
             print("Training - Epoch: {}  Avg accuracy: {:.4f} Avg loss: {:.4f}"
                   .format(trainer.state.epoch, accuracy, loss))
             model.train()
+            print("1training epoch cost--- %s minutes ---" % (int(time.time() - start_time)/60))
 
         @trainer.on(Events.EPOCH_COMPLETED)
         def log_validation_results(trainer):
+            start_time = time.time()
+
             model.eval()
             # print('# running log_validation_results(trainer):')
             evaluator.run(val_loader)
@@ -505,6 +511,7 @@ class DeepClassifier():
                 self.model = model
                 self.best_accuracy = accuracy
             model.train()
+            print("1validating epoch cost--- %s minutes ---" % (int(time.time() - start_time)/60))
 
         checkpointer = ModelCheckpoint(self.weight_dir, 'modelCheckpoint', save_interval=1, n_saved=2, create_dir=True, save_as_state_dict=True, require_empty=False)
         trainer.add_event_handler(Events.EPOCH_COMPLETED, checkpointer, {'epoch': model})

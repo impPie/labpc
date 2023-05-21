@@ -207,8 +207,8 @@ class ParameterSetup(object):
         # self.additionalFeatureDim = d['additionalFeatureDim']
 
         # markov order
-        # self.markovOrderForTraining = d['markovOrderForTraining']
-        # self.markovOrderForPrediction = d['markovOrderForPrediction']
+        self.markovOrderForTraining = d['markovOrderForTraining']
+        self.markovOrderForPrediction = d['markovOrderForPrediction']
 
         # number of stages to consider
         self.maximumStageNum = d['maximumStageNum']

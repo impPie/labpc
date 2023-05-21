@@ -67,6 +67,7 @@ class EzT:
             #------------------------------------------------
             with open("../../handler/data/pickled/eegAndStage.All_L.pkl","rb") as dataFileHandler:
             # with open("../../data/pickled ori/eegAndStage.sixFilesNo1.pkl","rb") as dataFileHandler:
+            # with open("../../data/pickled del/eegAndStage.No_Hf_l_sixFilesNo1.pkl","rb") as dataFileHandler:
                 (eeg, emg, stageSeq, timeStamps) = pickle.load(dataFileHandler)
             
             beeg=eeg.reshape(-1,512)
@@ -97,7 +98,8 @@ class EzT:
             print("Finish predicting--- %s minutes ---" % (int(time.time() - start_time)/60))
 
             #Record
-            with open("../../results/{}_predict.pickle".format(classifierID), 'wb') as out_path:
+            # with open("../../results/{}_predictOnDel.pickle".format(classifierID), 'wb') as out_path:
+            with open("../../results/{}_predictAll.pickle".format(classifierID), 'wb') as out_path:
                  pickle.dump(self.y_pred_L,out_path)
             out_path.close()
             

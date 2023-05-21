@@ -1,0 +1,144 @@
+optionType = -r , optionVals =  ['1']
+paramFileName = params.json
+in ParameterSetup, paramFilePath = ../../data/params/params.json
+in classifierTrainer.connectSamplesAndTrain(), params.networkType = cnn_lstm
+using cnn_lstm in connectSamplesAndTrain
+
+For training:
+  x_train.shape = (127356, 9, 1, 622)
+  y_train = ['S' 'S' 'S' ... 'S' 'S' 'S']
+  y_train.shape = (127356,)
+copying params.json to ../../data/pickled/params.W6193T.json
+classifierID = W6193T
+classifierType = deep
+for testing, use:
+python computeTestError.py W6193T
+in fileManagement.finClassifier(), params.networkType = cnn_lstm
+classLabels = ['H' 'L' 'R' 'S']
+len(featuresBySamples) = 127356
+in deepClassifier.generateModel, params.networkType = cnn_lstm
+using CNN-LSTM for raw data
+filter_nums = [64, 64, 64, 64, 64, 64, 64, 64]
+kernel_sizes = [9, 9, 9, 9, 7, 7, 7, 7]
+strides = [1, 2, 2, 2, 2, 2, 2, 2]
+compiling the model
+device: cpu
+featureTensor.shape = torch.Size([127356, 9, 1, 622])
+for EEGDataset, train_data.shape = torch.Size([120988, 9, 1, 622])
+for EEGDataset, train_labels.shape = (120988,)
+self.batch_size = 32
+train_data.shape = torch.Size([120988, 9, 1, 622]), train_labels.shape = (120988,)
+starting fit()
+C:\Users\SSG Lab\AppData\Roaming\Python\Python310\site-packages\ignite\handlers\checkpoint.py:993: UserWarning: Argument save_interval is deprecated and should be None. This argument will be removed in 0.5.0.Please, use events filtering instead, e.g. Events.ITERATION_STARTED(every=1000)
+  warnings.warn(msg)
+before trainer.run()
+Training - Epoch: 1  Avg accuracy: 0.7481 Avg loss: 0.6377
+Validation Results - Epoch: 1  Avg val accuracy: 0.8255 Avg val loss: 0.4655
+--> At Epoch: 1, saved to ../../data/pickled/weights.W6193T.pkl
+Training - Epoch: 2  Avg accuracy: 0.8080 Avg loss: 0.5325
+Validation Results - Epoch: 2  Avg val accuracy: 0.8579 Avg val loss: 0.3880
+--> At Epoch: 2, saved to ../../data/pickled/weights.W6193T.pkl
+Training - Epoch: 3  Avg accuracy: 0.8475 Avg loss: 0.4124
+Validation Results - Epoch: 3  Avg val accuracy: 0.8758 Avg val loss: 0.3530
+--> At Epoch: 3, saved to ../../data/pickled/weights.W6193T.pkl
+Training - Epoch: 4  Avg accuracy: 0.8687 Avg loss: 0.3660
+Validation Results - Epoch: 4  Avg val accuracy: 0.8860 Avg val loss: 0.3304
+--> At Epoch: 4, saved to ../../data/pickled/weights.W6193T.pkl
+Training - Epoch: 5  Avg accuracy: 0.8758 Avg loss: 0.3490
+Validation Results - Epoch: 5  Avg val accuracy: 0.8858 Avg val loss: 0.3287
+Training - Epoch: 6  Avg accuracy: 0.8912 Avg loss: 0.3080
+Validation Results - Epoch: 6  Avg val accuracy: 0.8835 Avg val loss: 0.3214
+Training - Epoch: 7  Avg accuracy: 0.8876 Avg loss: 0.3160
+Validation Results - Epoch: 7  Avg val accuracy: 0.8875 Avg val loss: 0.3165
+--> At Epoch: 7, saved to ../../data/pickled/weights.W6193T.pkl
+Training - Epoch: 8  Avg accuracy: 0.8978 Avg loss: 0.2935
+Validation Results - Epoch: 8  Avg val accuracy: 0.8828 Avg val loss: 0.3312
+Training - Epoch: 9  Avg accuracy: 0.8956 Avg loss: 0.2948
+Validation Results - Epoch: 9  Avg val accuracy: 0.8846 Avg val loss: 0.3249
+Training - Epoch: 10  Avg accuracy: 0.9045 Avg loss: 0.2745
+Validation Results - Epoch: 10  Avg val accuracy: 0.8858 Avg val loss: 0.3211
+Training - Epoch: 11  Avg accuracy: 0.8961 Avg loss: 0.2914
+Validation Results - Epoch: 11  Avg val accuracy: 0.8863 Avg val loss: 0.3222
+Training - Epoch: 12  Avg accuracy: 0.8908 Avg loss: 0.2953
+Validation Results - Epoch: 12  Avg val accuracy: 0.8877 Avg val loss: 0.3172
+--> At Epoch: 12, saved to ../../data/pickled/weights.W6193T.pkl
+Training - Epoch: 13  Avg accuracy: 0.9041 Avg loss: 0.2745
+Validation Results - Epoch: 13  Avg val accuracy: 0.8839 Avg val loss: 0.3257
+Training - Epoch: 14  Avg accuracy: 0.9043 Avg loss: 0.2694
+Validation Results - Epoch: 14  Avg val accuracy: 0.8842 Avg val loss: 0.3268
+Training - Epoch: 15  Avg accuracy: 0.9109 Avg loss: 0.2515
+Validation Results - Epoch: 15  Avg val accuracy: 0.8890 Avg val loss: 0.3209
+--> At Epoch: 15, saved to ../../data/pickled/weights.W6193T.pkl
+Training - Epoch: 16  Avg accuracy: 0.9123 Avg loss: 0.2474
+Validation Results - Epoch: 16  Avg val accuracy: 0.8836 Avg val loss: 0.3233
+Training - Epoch: 17  Avg accuracy: 0.9036 Avg loss: 0.2649
+Validation Results - Epoch: 17  Avg val accuracy: 0.8860 Avg val loss: 0.3267
+Training - Epoch: 18  Avg accuracy: 0.9129 Avg loss: 0.2454
+Validation Results - Epoch: 18  Avg val accuracy: 0.8813 Avg val loss: 0.3345
+Training - Epoch: 19  Avg accuracy: 0.9105 Avg loss: 0.2462
+Validation Results - Epoch: 19  Avg val accuracy: 0.8833 Avg val loss: 0.3315
+Training - Epoch: 20  Avg accuracy: 0.9132 Avg loss: 0.2378
+Validation Results - Epoch: 20  Avg val accuracy: 0.8789 Avg val loss: 0.3397
+Training - Epoch: 21  Avg accuracy: 0.9173 Avg loss: 0.2332
+Validation Results - Epoch: 21  Avg val accuracy: 0.8849 Avg val loss: 0.3317
+Training - Epoch: 22  Avg accuracy: 0.9208 Avg loss: 0.2309
+Validation Results - Epoch: 22  Avg val accuracy: 0.8844 Avg val loss: 0.3421
+Training - Epoch: 23  Avg accuracy: 0.9175 Avg loss: 0.2312
+Validation Results - Epoch: 23  Avg val accuracy: 0.8827 Avg val loss: 0.3424
+Training - Epoch: 24  Avg accuracy: 0.9187 Avg loss: 0.2262
+Validation Results - Epoch: 24  Avg val accuracy: 0.8825 Avg val loss: 0.3430
+Training - Epoch: 25  Avg accuracy: 0.9104 Avg loss: 0.2423
+Validation Results - Epoch: 25  Avg val accuracy: 0.8777 Avg val loss: 0.3502
+Training - Epoch: 26  Avg accuracy: 0.9215 Avg loss: 0.2198
+Validation Results - Epoch: 26  Avg val accuracy: 0.8809 Avg val loss: 0.3528
+Training - Epoch: 27  Avg accuracy: 0.9257 Avg loss: 0.2108
+Validation Results - Epoch: 27  Avg val accuracy: 0.8855 Avg val loss: 0.3377
+Training - Epoch: 28  Avg accuracy: 0.9272 Avg loss: 0.2055
+Validation Results - Epoch: 28  Avg val accuracy: 0.8773 Avg val loss: 0.3610
+Training - Epoch: 29  Avg accuracy: 0.9223 Avg loss: 0.2138
+Validation Results - Epoch: 29  Avg val accuracy: 0.8803 Avg val loss: 0.3570
+Training - Epoch: 30  Avg accuracy: 0.9255 Avg loss: 0.2081
+Validation Results - Epoch: 30  Avg val accuracy: 0.8816 Avg val loss: 0.3572
+Training - Epoch: 31  Avg accuracy: 0.9320 Avg loss: 0.1912
+Validation Results - Epoch: 31  Avg val accuracy: 0.8773 Avg val loss: 0.3566
+Training - Epoch: 32  Avg accuracy: 0.9262 Avg loss: 0.2048
+Validation Results - Epoch: 32  Avg val accuracy: 0.8808 Avg val loss: 0.3626
+Training - Epoch: 33  Avg accuracy: 0.9311 Avg loss: 0.1935
+Validation Results - Epoch: 33  Avg val accuracy: 0.8806 Avg val loss: 0.3643
+Training - Epoch: 34  Avg accuracy: 0.9284 Avg loss: 0.1991
+Validation Results - Epoch: 34  Avg val accuracy: 0.8819 Avg val loss: 0.3563
+Training - Epoch: 35  Avg accuracy: 0.9297 Avg loss: 0.1962
+Validation Results - Epoch: 35  Avg val accuracy: 0.8833 Avg val loss: 0.3647
+Training - Epoch: 36  Avg accuracy: 0.9319 Avg loss: 0.1896
+Validation Results - Epoch: 36  Avg val accuracy: 0.8822 Avg val loss: 0.3718
+Training - Epoch: 37  Avg accuracy: 0.9341 Avg loss: 0.1838
+Validation Results - Epoch: 37  Avg val accuracy: 0.8833 Avg val loss: 0.3618
+Training - Epoch: 38  Avg accuracy: 0.9338 Avg loss: 0.1834
+Validation Results - Epoch: 38  Avg val accuracy: 0.8783 Avg val loss: 0.3735
+Training - Epoch: 39  Avg accuracy: 0.9340 Avg loss: 0.1846
+Validation Results - Epoch: 39  Avg val accuracy: 0.8828 Avg val loss: 0.3701
+Training - Epoch: 40  Avg accuracy: 0.9304 Avg loss: 0.1893
+Validation Results - Epoch: 40  Avg val accuracy: 0.8817 Avg val loss: 0.3655
+Training - Epoch: 41  Avg accuracy: 0.9326 Avg loss: 0.1849
+Validation Results - Epoch: 41  Avg val accuracy: 0.8838 Avg val loss: 0.3814
+Training - Epoch: 42  Avg accuracy: 0.9362 Avg loss: 0.1767
+Validation Results - Epoch: 42  Avg val accuracy: 0.8787 Avg val loss: 0.3733
+Training - Epoch: 43  Avg accuracy: 0.9359 Avg loss: 0.1803
+Validation Results - Epoch: 43  Avg val accuracy: 0.8805 Avg val loss: 0.3740
+Training - Epoch: 44  Avg accuracy: 0.9350 Avg loss: 0.1800
+Validation Results - Epoch: 44  Avg val accuracy: 0.8806 Avg val loss: 0.3679
+Training - Epoch: 45  Avg accuracy: 0.9342 Avg loss: 0.1803
+Validation Results - Epoch: 45  Avg val accuracy: 0.8781 Avg val loss: 0.3869
+Training - Epoch: 46  Avg accuracy: 0.9381 Avg loss: 0.1729
+Validation Results - Epoch: 46  Avg val accuracy: 0.8783 Avg val loss: 0.3786
+Training - Epoch: 47  Avg accuracy: 0.9369 Avg loss: 0.1740
+Validation Results - Epoch: 47  Avg val accuracy: 0.8819 Avg val loss: 0.3722
+Training - Epoch: 48  Avg accuracy: 0.9380 Avg loss: 0.1709
+Validation Results - Epoch: 48  Avg val accuracy: 0.8794 Avg val loss: 0.3824
+Training - Epoch: 49  Avg accuracy: 0.9335 Avg loss: 0.1794
+Validation Results - Epoch: 49  Avg val accuracy: 0.8806 Avg val loss: 0.3809
+Training - Epoch: 50  Avg accuracy: 0.9368 Avg loss: 0.1736
+Validation Results - Epoch: 50  Avg val accuracy: 0.8767 Avg val loss: 0.3950
+The best model is saved at ../../data/pickled/weights.W6193T.pkl with val_acc = 0.8889586932621328
+2023-05-21 10:11:49.171920
+--- 2360.883333333333 minutes ---
