@@ -71,7 +71,7 @@ class FeatureExtractor():
                 featureTensor = featuresAdditional
             else:
                 featureTensor = np.r_[featureTensor, featuresAdditional]
-            # print('featureTensor.shape = ' + str(featureTensor.shape) + ', features.shape = ' + str(features.shape))
+            print('featureTensor.shape = ' + str(featureTensor.shape) + ', features.shape = ' + str(features.shape))
             startSamplePoint = endSamplePoint
             '''
             # emgfeatureTensor = np.c_[emgfeatureTensor, np.mean(np.abs(emgSegment))]

@@ -3,6 +3,7 @@ from __future__ import print_function
 import time
 # sys.path.insert(1,'..')
 from os import mkdir
+import os
 from os.path import isdir
 import numpy as np
 from utils.stageLabelAndOneHot import stageLabel2oneHot
@@ -466,6 +467,9 @@ class DeepClassifier():
 
         # self.writer = SummaryWriter(log_dir=self.weight_dir)
 
+        logPath = "../../data/trainLog.txt"
+        if not os.path.exists(logPath):
+            os.makedirs(logPath)
         @trainer.on(Events.EPOCH_COMPLETED)
         def log_training_results(trainer):
             start_time = time.time()
@@ -485,7 +489,10 @@ class DeepClassifier():
                   .format(trainer.state.epoch, accuracy, loss))
             model.train()
             print("1training epoch cost--- %s minutes ---" % (int(time.time() - start_time)/60))
-
+            lgP = open(logPath,"a")
+            lgP.writelines(["\nTraining - Epoch: {}  Avg accuracy: {:.4f} Avg loss: {:.4f}"
+                  .format(trainer.state.epoch, accuracy, loss)])
+            lgP.close()
         @trainer.on(Events.EPOCH_COMPLETED)
         def log_validation_results(trainer):
             start_time = time.time()
@@ -510,8 +517,15 @@ class DeepClassifier():
                 print('--> At Epoch: ', trainer.state.epoch, ', saved to ', self.weight_path_best, sep='')
                 self.model = model
                 self.best_accuracy = accuracy
+                lgP = open(logPath,"a")
+                lgP.writelines(["\nSave - Epoch: {}  ".format(trainer.state.epoch)])
+                lgP.close()
             model.train()
             print("1validating epoch cost--- %s minutes ---" % (int(time.time() - start_time)/60))
+            lgP = open(logPath,"a")
+            lgP.writelines(["\nValidation Results - Epoch: {}  Avg val accuracy: {:.4f} Avg val loss: {:.4f}"
+                  .format(trainer.state.epoch, accuracy, loss),"\n1validating epoch cost--- %s minutes ---" % (int(time.time() - start_time)/60)])
+            lgP.close()
 
         checkpointer = ModelCheckpoint(self.weight_dir, 'modelCheckpoint', save_interval=1, n_saved=2, create_dir=True, save_as_state_dict=True, require_empty=False)
         trainer.add_event_handler(Events.EPOCH_COMPLETED, checkpointer, {'epoch': model})
