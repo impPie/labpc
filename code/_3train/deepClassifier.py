@@ -467,9 +467,10 @@ class DeepClassifier():
 
         # self.writer = SummaryWriter(log_dir=self.weight_dir)
 
-        logPath = "../../data/trainLog.txt"
+        logPath = "../../data/tLog/"
         if not os.path.exists(logPath):
             os.makedirs(logPath)
+        logPath = logPath+"trainLog.txt"
         @trainer.on(Events.EPOCH_COMPLETED)
         def log_training_results(trainer):
             start_time = time.time()
