@@ -225,6 +225,28 @@ def getEEGAndFeatureFiles(params, testNum, offset, randomize):
     # print('in getEEGAndFeatureFiles() : test_fileTripletL =', test_fileTripletL)
     return train_fileTripletL, test_fileTripletL
 
+
+def crossFoldsEEGAndFeatureFiles(params):
+    eegAndStageFiles = getAllEEGFiles(params)
+    testNum = 1
+    train_fileTripletL = []
+    test_fileTripletL = []
+    for offset in range(5):
+        train_eegAndStageFiles, test_eegAndStageFiles = listSplit(
+            eegAndStageFiles, testNum, offset, randomize=0)
+        # print('train_eegAndStageFiles =', train_eegAndStageFiles)
+        train_fileIDs, test_fileIDs = list(
+            map(fileIDsFromEEGFiles, (train_eegAndStageFiles, test_eegAndStageFiles)))
+        train_featureFiles, test_featureFiles = list(map(
+            lambda fileIDs: getFeatureFiles(params, fileIDs), (train_fileIDs, test_fileIDs)))
+
+        train_fileTripletL.append(list(sortAndMerge(
+            train_eegAndStageFiles, train_featureFiles, train_fileIDs)))
+        test_fileTripletL.append(list(sortAndMerge(
+            test_eegAndStageFiles, test_featureFiles, test_fileIDs)))
+    
+    return train_fileTripletL, test_fileTripletL
+
 def fileIDs2triplets(params, train_fileIDs, test_fileIDs):
     # print('in fileIDs2triplets(): train_fileIDs =', train_fileIDs)
     # print('in fileIDs2triplets(): test_fileIDs =', test_fileIDs)
