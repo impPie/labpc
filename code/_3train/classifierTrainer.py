@@ -6,7 +6,7 @@ import pickle
 import numpy as np
 import string
 import random
-from utils.fileManagement import getEEGAndFeatureFiles, findClassifier, writeTrainFileIDsUsedForTraining, getEEGAndFeatureFilesByClassifierID, getEEGAndFeatureFilesByExcludingFromTrainingByPrefix, getEEGAndFeatureFilesByExcludingTestMouseIDs
+from utils.fileManagement import getEEGAndFeatureFiles, findClassifier, writeTrainFileIDsUsedForTraining, getEEGAndFeatureFilesByClassifierID, getEEGAndFeatureFilesByExcludingFromTrainingByPrefix, getEEGAndFeatureFilesByExcludingTestMouseIDs,crossFoldsEEGAndFeatureFiles
 
 #-----------------------
 def extract(featureFilePath, stageFilePath):
@@ -109,6 +109,20 @@ def connectSamplesAndTrain(params, fileTripletL, stage_restriction, paramID=0):
 
 #-----------------------
 def trainClassifier(params, outputDir, optionType, optionVals):
+    #  '5fold cross vertification':
+    if optionType == '-cf' or optionType == '':
+
+        train_fileTripletL, test_fileTripletL = crossFoldsEEGAndFeatureFiles(
+            params, testNum, offset, randomize)
+        for i in range(len(test_fileTripletL)):
+            if len(train_fileTripletL[i]) > 0:
+                def stage_restriction(orig_stageSeq):
+                    return orig_stageSeq
+                connectSamplesAndTrain(params, train_fileTripletL[i], stage_restriction)
+            else:
+                print('%%% No file for training.')
+        return
+    
     if optionType == '-o':
         testNum, offset = optionVals# set test and train number 
         randomize = False
@@ -123,13 +137,8 @@ def trainClassifier(params, outputDir, optionType, optionVals):
     elif optionType == '-e':   # specify excluded files
         test_file_prefix = optionVals[0]
         train_fileTripletL, test_fileTripletL = getEEGAndFeatureFilesByExcludingFromTrainingByPrefix(params, test_file_prefix)
-    elif optionType == '-m':   # specify test mouseID
-        test_mouseIDs = optionVals
-        train_fileTripletL, test_fileTripletL = getEEGAndFeatureFilesByExcludingTestMouseIDs(params, test_mouseIDs)
-    else:
-        testNum, offset, randomize = 10, 0, True
-        train_fileTripletL, test_fileTripletL = getEEGAndFeatureFiles(params, testNum, offset, randomize)
-    # print('train_fileTripletL =', train_fileTripletL)
+    
+   
     if len(train_fileTripletL) > 0:
         def stage_restriction(orig_stageSeq):
             return orig_stageSeq
